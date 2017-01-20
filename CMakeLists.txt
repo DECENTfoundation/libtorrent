@@ -160,7 +160,7 @@ set(ed25519_sources
 
 set(includes include ed25519/src)
 
-option(shared "build libtorrent as a shared library" ON)
+option(shared "build libtorrent as a shared library" OFF)
 option(static_runtime "build libtorrent with static runtime" OFF)
 option(pool-allocators "Uses a pool allocator for disk and piece buffers" ON)
 option(encryption "link against openssl and enable encryption" ON)
@@ -275,6 +275,10 @@ else()
 	set(Boost_USE_STATIC_LIBS ON)
 	add_library(torrent-rasterbar STATIC ${sources2})
 endif()
+
+target_include_directories(torrent-rasterbar
+	INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+	INTERFACE "$<INSTALL_INTERFACE:include>")
 
 # Boost
 if(NOT DEFINED Boost_INCLUDE_DIR OR NOT DEFINED Boost_LIBRARIES)

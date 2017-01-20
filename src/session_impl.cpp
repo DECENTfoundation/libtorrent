@@ -160,7 +160,14 @@ namespace
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #endif
-		~openssl_cleanup() { CRYPTO_cleanup_all_ex_data(); }
+		~openssl_cleanup()
+		{
+#if defined(__APPLE__) && defined(__MACH__)
+			// Dummy call: make Mach-O linker expose some dependent symbols.
+			ENGINE_load_rdrand();
+#endif
+			CRYPTO_cleanup_all_ex_data();
+		}
 #ifdef TORRENT_MACOS_DEPRECATED_LIBCRYPTO
 #pragma clang diagnostic pop
 #endif

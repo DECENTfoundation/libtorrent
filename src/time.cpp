@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "libtorrent/aux_/time.hpp"
-#include <atomic>
+#include <boost/atomic.hpp>
 
 namespace libtorrent { namespace aux
 {
@@ -39,7 +39,7 @@ namespace libtorrent { namespace aux
 	// the session_impl main thread). This is cheaper than a system call and can
 	// be used where more accurate time is not necessary
 	namespace {
-		std::atomic<time_point> g_current_time(clock_type::now());
+		boost::atomic<time_point> g_current_time(clock_type::now());
 	}
 	time_point time_now() { return aux::g_current_time.load(); }
 	void update_time_now() { g_current_time.store(clock_type::now()); }

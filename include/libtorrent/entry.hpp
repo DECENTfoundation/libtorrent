@@ -60,6 +60,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "libtorrent/config.hpp"
 
+#include <type_traits>
 #include <map>
 #include <list>
 #include <string>
